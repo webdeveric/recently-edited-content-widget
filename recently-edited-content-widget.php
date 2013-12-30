@@ -1,14 +1,14 @@
 <?php
 /*
 Plugin Name: Recently Edited Content Widget
-Version: 0.2.7.1
+Version: 0.2.7.2
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
 Author: Eric King
 Author URI: http://webdeveric.com/
 */
 
 if( ! function_exists('ellipsis') ){
-	function ellipsis( $str,$max_len,$ellipsis="..." ){
+	function ellipsis( $str,$max_len,$ellipsis="&hellip;" ){
 		$str = trim( $str );
 		$str_len=strlen( $str );
 		if( $str_len<=$max_len ){
@@ -26,7 +26,7 @@ if( ! function_exists('ellipsis_words') ){
 	/**
 		This is similar to ellipsis() but it doesn't count string length. It uses word counts instead.
 	*/
-	function ellipsis_words( $str, $max_words, $ellipsis="..." ){
+	function ellipsis_words( $str, $max_words, $ellipsis="&hellip;" ){
 		$str = trim( $str );
 		$words = preg_split('/\s+/', $str );
 		if( count( $words ) <= $max_words )return $str;
@@ -55,11 +55,6 @@ class RECW_Dashboard_Widget {
 		$user_id = get_current_user_id();
 		if( $user_id > 0 ){
 			if( $save_options ){
-				/*
-				printf('<pre>%s</pre>', print_r( $_POST , true ) );
-				printf('<pre>%s</pre>', print_r( self::$options , true ) );
-				exit;
-				*/
 				update_user_meta( $user_id, self::USER_META_KEY, self::$options );
 			} else {
 				$stored_options = get_user_meta( $user_id, self::USER_META_KEY, true );
@@ -74,18 +69,7 @@ class RECW_Dashboard_Widget {
 
 
 	public static function remove_options(){
-		// Remove old way of saving options.
-		/*
-		$dashboard_widget_options = get_option( 'dashboard_widget_options' );
-		if( isset( $dashboard_widget_options[ self::WIDGET_ID ] ) ){
-			unset( $dashboard_widget_options[ self::WIDGET_ID ] );
-			update_option( 'dashboard_widget_options', $dashboard_widget_options );
-			return true;
-		}
-		return false;
-		*/
-		// delete_metadata($meta_type, $object_id, $meta_key, $meta_value = '', $delete_all = false)
-		delete_metadata('user', 0, self::USER_META_KEY, '', true);
+		delete_metadata( 'user', 0, self::USER_META_KEY, '', true );
 	}
 
 	public static function display(){
@@ -109,25 +93,6 @@ class RECW_Dashboard_Widget {
 			$get_posts_args['meta_value'] = get_current_user_id();
 		}
 
-		/*
-		// This is the manual way to do it.
-		$find_posts = ' SELECT p.* FROM ' . $wpdb->posts . ' AS p INNER JOIN ' . $wpdb->postmeta . ' as m ON (p.ID = m.post_id)
-							WHERE p.post_type IN ( %2$s )
-								AND p.post_status IN ( %3$s )
-								AND (m.meta_key = "_edit_last" AND CAST(m.meta_value AS UNSIGNED) = %1$d )
-						UNION
-						SELECT * FROM ' . $wpdb->posts . ' AS p
-							WHERE p.post_author = %1$d
-								AND p.post_type IN ( %2$s )
-								AND p.post_status IN ( %3$s )
-								AND (select count(*) from ' . $wpdb->postmeta . ' as m where m.post_id = p.ID and m.meta_key = "_edit_last") = 0
-						ORDER BY post_modified DESC LIMIT %4$d';
-
-		$find_posts_sql = sprintf( $find_posts, get_current_user_id(), "'" . implode("','", $get_posts_args['post_type'] ) . "'", "'" . implode("','", $get_posts_args['post_status'] ) . "'", self::$options['num_items'] );
-		$recently_edited_content = $wpdb->get_results( $find_posts_sql );
-		printf('<pre>%s</pre>', print_r( $find_posts_sql, true ) );
-		*/
-		
 		$posts = new WP_Query( $get_posts_args );
 
 		if( isset( $posts ) && $posts->have_posts() ){
@@ -209,10 +174,8 @@ class RECW_Dashboard_Widget {
 		self::load_options();
 
 		if ( 'POST' == $_SERVER['REQUEST_METHOD'] && isset( $_POST[ $form_id ] ) ){
-			//printf('<pre>%s</pre>', print_r( $_POST, true ) );
-			//printf('<pre>%s</pre>', print_r( self::$options, true ) );
-			foreach( self::$fields as $option_name => $opt ){
 
+			foreach( self::$fields as $option_name => $opt ){
 
 				switch( $opt['type'] ){
 					case 'int':
