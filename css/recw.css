@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 #recently-edited-content .dashboard-widget-control-form{
 	padding:10px;
 	margin:0;
@@ -59,9 +61,6 @@
 	position:relative;
 	border-top:1px solid #CCC;
 	padding:10px;
-	/*
-		background-attachment:fixed !important;
-	*/
 }
 
 .dashboard-recw-item .post-title{
@@ -95,20 +94,6 @@
 	color:#333;
 	border:1px solid #CCC;
 	text-shadow:1px 1px 1px #FFF;
-/*
-	-moz-transition-property:opacity;
-	-moz-transition-duration:.1s;
-	-moz-transition-delay:.1s;
-	-webkit-transition-property:opacity;
-	-webkit-transition-duration:.1s;
-	-webkit-transition-delay:.1s;
-	-o-transition-property:opacity;
-	-o-transition-duration:.1s;
-	-o-transition-delay:.1s;
-	transition-property:opacity;
-	transition-duration:.1s;
-	transition-delay:.1s;
-*/
 }
 
 .dashboard-recw-item:before{
