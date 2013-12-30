@@ -126,14 +126,6 @@ class RECW_Dashboard_Widget {
 				unset( $author_id );
 
 				$item = "<h4 class='post-title'><a href='$url' title='" . sprintf( __( 'Edit &#8220;%s&#8221;' ), esc_attr( $title ) ) . "'>" . esc_html($title) . '</a> <span class="post-meta"><span class="post-editor">Edited by ' . $author . '</span> on <time class="publish-date" datetime="' . mysql2date('c', $p->post_modified ) . '">' . mysql2date('l, F jS, Y \a\t g:i A', $p->post_modified ) . '</time></span></h4>';
-/*
-				$item .= '<p class="post-meta">Published: <time class="publish-date" datetime="' . get_the_time('c', $p ) . '">' . get_the_time('l, F jS, Y \a\t g:i A', $p ) . '</time>';
-				if( $p->post_modified != $p->post_date ){
-					$post_time = strtotime( $p->post_modified );
-					$item .= '<br />Modified: <time class="publish-date" datetime="' . date('c', $post_time ) . '">' . date('l, F jS, Y \a\t g:i A', $post_time ) . '</time>';
-				}				
-				$item .= '<p>';
-*/
 
 				if( $img_excerpt ){
 					$item .= $excerpt;
