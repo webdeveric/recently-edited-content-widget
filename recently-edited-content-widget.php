@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Recently Edited Content Widget
-Version: 0.2.7.2
+Version: 0.2.7.3
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
 Author: Eric King
 Author URI: http://webdeveric.com/
@@ -227,13 +227,31 @@ class RECW_Dashboard_Widget {
 					}
 				break;
 				case 'number':
-					printf( $input, self::$options[ $option_name ], 'size="3"');
+
+					$min	= isset( $opt['minvalue'] ) ? $opt['minvalue'] : 0;
+					$max	= isset( $opt['maxvalue'] ) ? $opt['maxvalue'] : 999;
+					$size	= strlen( $max );
+
+					printf(
+						$input,
+						self::$options[ $option_name ],
+						self::html_attr( compact( 'size', 'min', 'max' ) )
+					);
+
 				break;
 				default:
-					printf( $input, self::$options[ $option_name ], '');
+					printf( $input, self::$options[ $option_name ], '' );
 			}
 		    echo '</p>';
 		}
+	}
+
+	public static function html_attr( array $attributes = array() ){
+		$attr = array();
+		foreach( $attributes as $name => $value ){
+			$attr[] = $name . '="' . esc_attr( $value ) . '"';
+		}
+		return implode( ' ', $attr );
 	}
 
 	public static function get_post_types(){

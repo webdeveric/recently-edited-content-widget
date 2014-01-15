@@ -1,11 +1,10 @@
 === Recently Edited Content Widget ===
 Contributors: webdeveric
-Author URI: http://webdeveric.com/
-Donate link: http://phplug.in/donate/
+Donate link: http://webdeveric.com/donate/
 Tags: dashboard, widget, edited, post types
 Requires at least: 3.0.0
 Tested up to: 3.8
-Stable tag: 0.2.7.2
+Stable tag: 0.2.8
 
 This plugin provides a dashboard widget that lists recently edited content for quick access.
 
@@ -29,8 +28,8 @@ Options (per user settings):
 
 == Changelog ==
 
-= 0.2.7.2 =
-* Minor code clean-up.
+= 0.2.8 =
+* Updated html input type number to have min and max attributes.
 
 = 0.2.7.1 =
 * Updated permissions check. The widget does not get added with `wp_add_dashboard_widget` unless the current user can `edit_posts` or `edit_others_posts`.
