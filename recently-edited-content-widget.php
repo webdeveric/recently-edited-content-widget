@@ -1,10 +1,11 @@
 <?php
 /*
 Plugin Name: Recently Edited Content Widget
-Version: 0.2.7.3
-Description: This plugin provides a dashboard widget that shows content you have modified recently.
+Plugin URI: http://phplug.in/
 Author: Eric King
 Author URI: http://webdeveric.com/
+Description: This plugin provides a dashboard widget that shows content you have modified recently.
+Version: 0.2.8
 */
 
 if( ! function_exists('ellipsis') ){
