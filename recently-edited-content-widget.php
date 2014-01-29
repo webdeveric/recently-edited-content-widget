@@ -5,7 +5,8 @@ Plugin URI: http://phplug.in/
 Author: Eric King
 Author URI: http://webdeveric.com/
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
-Version: 0.2.8
+Version: 0.2.9
+Plugin Group: Dashboard Widgets
 */
 
 if( ! function_exists('ellipsis') ){
@@ -78,7 +79,6 @@ class RECW_Dashboard_Widget {
 		self::load_options();
 
 		global $post;
-		$old_post = $post;
 
 		$get_posts_args = array(
 			'suppress_filters' => true,
@@ -94,31 +94,30 @@ class RECW_Dashboard_Widget {
 			$get_posts_args['meta_value'] = get_current_user_id();
 		}
 
-		$posts = new WP_Query( $get_posts_args );
+		$recent_content = new WP_Query( $get_posts_args );
 
-		if( isset( $posts ) && $posts->have_posts() ){
+		if( isset( $recent_content ) && $recent_content->have_posts() ){
 			$list = array();
 			$even = false;
-			
-			// dump( $posts->posts );
-			
-			foreach ( $posts->posts as $p ){
-				setup_postdata( $p );
 
-				$url = $p->post_status == 'trash' ? add_query_arg('post', $p->ID, 'edit.php?post_status=trash&post_type=post') : get_edit_post_link( $p->ID );
-				$title = _draft_or_post_title( $p->ID );
+			while( $recent_content->have_posts() ):
+				
+				$recent_content->the_post();
+
+				$url = $post->post_status == 'trash' ? add_query_arg('post', get_the_ID(), 'edit.php?post_status=trash&post_type=post') : get_edit_post_link( get_the_ID() );
+				$title = get_the_title();
 				$excerpt = self::$options['excerpt_length'] > 0 ? get_the_excerpt() : '';
 				
-				if( $img_excerpt = ( $p->post_type == 'attachment' && $excerpt == '' ) ){
-					// $excerpt = sprintf('<a href="%s" target="_blank">View file: %s</a>', $p->guid, $p->post_title );
+				if( $img_excerpt = ( $post->post_type == 'attachment' && $excerpt == '' ) ){
+					// $excerpt = sprintf('<a href="%s" target="_blank">View file: %s</a>', $post->guid, $post->post_title );
 
-					$tn_url = wp_get_attachment_thumb_url( $p->ID );
-					$excerpt = sprintf('<img src="%1$s" alt="%2$s" title="%2$s" />', $tn_url, $p->post_title );
+					$tn_url = wp_get_attachment_thumb_url( get_the_ID() );
+					$excerpt = sprintf('<img src="%1$s" alt="%2$s" title="%2$s" />', $tn_url, $post->post_title );
 				}
 
-				$author_id = $p->post_author;
+				$author_id = $post->post_author;
 
-				if ( $last_id = get_post_meta( $p->ID, '_edit_last', true ) ){
+				if ( $last_id = get_post_meta( get_the_ID(), '_edit_last', true ) ){
 					$author_id = $last_id;
 					unset( $last_id );
 				}
@@ -126,7 +125,7 @@ class RECW_Dashboard_Widget {
 				$author = get_userdata( $author_id )->display_name;
 				unset( $author_id );
 
-				$item = "<h4 class='post-title'><a href='$url' title='" . sprintf( __( 'Edit &#8220;%s&#8221;' ), esc_attr( $title ) ) . "'>" . esc_html($title) . '</a> <span class="post-meta"><span class="post-editor">Edited by ' . $author . '</span> on <time class="publish-date" datetime="' . mysql2date('c', $p->post_modified ) . '">' . mysql2date('l, F jS, Y \a\t g:i A', $p->post_modified ) . '</time></span></h4>';
+				$item = "<h4 class='post-title'><a href='$url' title='" . sprintf( __( 'Edit &#8220;%s&#8221;' ), esc_attr( $title ) ) . "'>" . esc_html($title) . '</a> <span class="post-meta"><span class="post-editor">Edited by ' . $author . '</span> on <time class="publish-date" datetime="' . mysql2date('c', $post->post_modified ) . '">' . mysql2date('l, F jS, Y \a\t g:i A', $post->post_modified ) . '</time></span></h4>';
 
 				if( $img_excerpt ){
 					$item .= $excerpt;
@@ -136,16 +135,22 @@ class RECW_Dashboard_Widget {
 
 				}
 
-				$list[] = sprintf('<div class="dashboard-recw-item %4$s %1$s post-type-%3$s" data-posttype="%3$s" data-status="%4$s">%2$s</div>', $even ? 'even' : 'odd', $item, $p->post_type, $p->post_status );
+				$list[] = sprintf('<div class="dashboard-recw-item %4$s %1$s post-type-%3$s" data-posttype="%3$s" data-status="%4$s">%2$s</div>', $even ? 'even' : 'odd', $item, $post->post_type, $post->post_status );
 				$even = ! $even;
-			}
+
+			endwhile;
+
+			wp_reset_query();
+
 	?>
 		<ul>
 			<li><?php echo join( "</li>\n<li>", $list ); ?></li>
 		</ul>
 	<?php
 		} else {
+
 			$message = '<p>There isn&#8217;t any recently edited content in the system.</p>';
+
 			if( self::$options['current_user_only'] == true ){
 				global $wpdb;
 				$num_posts = $wpdb->get_var('select count(*) from ' . $wpdb->posts );
@@ -158,7 +163,7 @@ class RECW_Dashboard_Widget {
 			printf('<div class="dashboard-recw-item" data-posttype="notice" data-status="no content">%s</div>', __( $message ) );
 
 		}
-		$post = $old_post;
+
 	}
 
 	public static function config( $empty_str = '', $config = array() ){
@@ -335,9 +340,8 @@ class RECW_Dashboard_Widget {
 			)
 		);
 
-		wp_add_dashboard_widget( self::WIDGET_ID, self::WIDGET_TITLE, array( __CLASS__, 'display'), array( __CLASS__, 'config') );
-		wp_register_style( 'RECW_css', plugins_url('css/recw.css', __FILE__) );
-		wp_enqueue_style( 'RECW_css' );
+		wp_add_dashboard_widget( self::WIDGET_ID, self::WIDGET_TITLE, array( __CLASS__, 'display' ), array( __CLASS__, 'config' ) );
+		wp_enqueue_style( 'recw', plugins_url( 'css/recw.css', __FILE__ ) );
 	}
 
 
