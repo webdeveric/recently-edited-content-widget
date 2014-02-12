@@ -1,0 +1,170 @@
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+@import "variables";
+
+#recently-edited-content{
+
+	.dashboard-widget-control-form{
+		padding:10px;
+		margin:0;
+
+		p,
+		ul{
+			margin:0 0 10px 0;
+			overflow:hidden;
+		}
+
+		label{
+			float:left;
+			display:block;
+			width:150px;
+			padding:4px;
+			margin-right:10px;
+		}
+
+		li{
+			float:left;
+			width:25%;
+			margin:0 0 10px 0;
+			overflow:hidden;
+
+			label{
+				display:inline;
+				padding:0;
+				line-height:1.5em;
+				width:auto;
+				float:none;
+
+				input{
+					vertical-align:middle;
+				}
+
+				&:hover{
+					color:#d54e21;
+				}
+
+			}
+
+		}
+
+	}
+
+	.inside{
+		margin:0;
+		padding:0;
+
+		.dashboard-recw-notice{
+			padding:10px;
+			p{
+				margin:0;
+				padding:0;
+			}
+		}
+
+		& > ul#recently-edited-content-list{
+			margin:0;
+			padding:0;
+
+			& > li{
+				margin:0;
+				padding:0;
+				border-top:1px solid #E5E5E5;
+
+				.dashboard-recw-item{
+					position:relative;
+					padding:10px 14px;
+
+					&.odd{
+						background-color:#FAFAFA;	
+					}
+
+					&.publish .post-state{
+						display: none;
+					}
+
+					&.pending{
+						background-image:url(../../imgs/45-deg-gold.png);
+						border-left:4px solid #DD823B;
+					}
+
+					&.draft{
+						background-image:url(../../imgs/wavy-lines-green.png);
+						border-left:4px solid #9EA476;
+					}
+
+					&.trash{
+						background-image:url(../../imgs/red-x.png);
+						border-left:4px solid #E14D43;
+					}
+
+					&.future{
+						background-image:url(../../imgs/chronometer.png), url(../../imgs/45-deg-white.png);
+						background-repeat:no-repeat, repeat;
+						background-position:98% 10px, 0 0;
+						border-left:4px solid #52ACCC;
+					}
+					
+					&.pending,
+					&.draft,
+					&.trash,
+					&.future{
+						padding:10px;
+					}
+
+					&:hover{
+						background-color:#FFF;	
+
+						.row-actions{
+							visibility:visible;
+						}
+
+					}
+
+					.header{
+						@include pie-clearfix;
+
+						font-weight: bold;
+						text-shadow:1px 1px 0 #FFF;
+
+						.post-title{
+							font-size:1.0769em;
+						}
+
+						.post-type,
+						.post-state{
+							color:#444;
+						}
+
+						.row-actions{
+							float: right;
+							font-weight: normal;
+						}
+
+					}
+
+					.post-meta{
+						display: block;
+						color:rgba(0,0,0,.66);	
+					}
+
+					.content{
+						margin:10px 0 0 0;
+
+						p:last-child{
+							margin-bottom:0;
+						}
+					}
+
+				}
+
+				&:first-child{
+					border-top:0;
+				}
+
+			}
+
+		}
+
+	}
+
+}

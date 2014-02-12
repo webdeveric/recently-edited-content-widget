@@ -1,0 +1,157 @@
+/* line 7, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form {
+  padding: 10px;
+  margin: 0;
+}
+/* line 12, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form p,
+#recently-edited-content .dashboard-widget-control-form ul {
+  margin: 0 0 10px 0;
+  overflow: hidden;
+}
+/* line 17, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form label {
+  float: left;
+  display: block;
+  width: 150px;
+  padding: 4px;
+  margin-right: 10px;
+}
+/* line 25, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form li {
+  float: left;
+  width: 25%;
+  margin: 0 0 10px 0;
+  overflow: hidden;
+}
+/* line 31, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form li label {
+  display: inline;
+  padding: 0;
+  line-height: 1.5em;
+  width: auto;
+  float: none;
+}
+/* line 38, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form li label input {
+  vertical-align: middle;
+}
+/* line 42, ../../scss/main.scss */
+#recently-edited-content .dashboard-widget-control-form li label:hover {
+  color: #d54e21;
+}
+/* line 52, ../../scss/main.scss */
+#recently-edited-content .inside {
+  margin: 0;
+  padding: 0;
+}
+/* line 56, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-notice {
+  padding: 10px;
+}
+/* line 58, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-notice p {
+  margin: 0;
+  padding: 0;
+}
+/* line 64, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list {
+  margin: 0;
+  padding: 0;
+}
+/* line 68, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #e5e5e5;
+}
+/* line 73, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item {
+  position: relative;
+  padding: 10px 14px;
+}
+/* line 77, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.odd {
+  background-color: #FAFAFA;
+}
+/* line 81, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.publish .post-state {
+  display: none;
+}
+/* line 85, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.pending {
+  background-image: url(../../imgs/45-deg-gold.png);
+  border-left: 4px solid #dd823b;
+}
+/* line 90, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.draft {
+  background-image: url(../../imgs/wavy-lines-green.png);
+  border-left: 4px solid #9ea476;
+}
+/* line 95, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.trash {
+  background-image: url(../../imgs/red-x.png);
+  border-left: 4px solid #e14d43;
+}
+/* line 100, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.future {
+  background-image: url(../../imgs/chronometer.png), url(../../imgs/45-deg-white.png);
+  background-repeat: no-repeat, repeat;
+  background-position: 98% 10px, 0 0;
+  border-left: 4px solid #52accc;
+}
+/* line 110, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.pending, #recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.draft, #recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.trash, #recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.future {
+  padding: 10px;
+}
+/* line 114, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item:hover {
+  background-color: #FFF;
+}
+/* line 117, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item:hover .row-actions {
+  visibility: visible;
+}
+/* line 123, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header {
+  *zoom: 1;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 white;
+}
+/* line 38, ../../../../../../../../../../usr/share/compass/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 129, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .post-title {
+  font-size: 1.0769em;
+}
+/* line 134, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .post-type,
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .post-state {
+  color: #444;
+}
+/* line 138, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .row-actions {
+  float: right;
+  font-weight: normal;
+}
+/* line 145, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .post-meta {
+  display: block;
+  color: rgba(0, 0, 0, 0.66);
+}
+/* line 150, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .content {
+  margin: 10px 0 0 0;
+}
+/* line 153, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .content p:last-child {
+  margin-bottom: 0;
+}
+/* line 160, ../../scss/main.scss */
+#recently-edited-content .inside > ul#recently-edited-content-list > li:first-child {
+  border-top: 0;
+}
