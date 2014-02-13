@@ -11,6 +11,8 @@ Version: 0.2.10
 
 class RECW_Dashboard_Widget {
 
+	const VERSION		= '0.2.10';
+
 	const WIDGET_ID		= 'recently-edited-content';
 	const WIDGET_TITLE	= 'Recent Content';
 	const USER_META_KEY	= 'recw_options';
@@ -100,7 +102,6 @@ class RECW_Dashboard_Widget {
 				}
 
 				$post_status = $post->post_status == 'publish' ? 'published' : $post->post_status;
-				$post_status = ucfirst( $post_status );
 
 				$publish_date = date_i18n('M jS, Y \a\t g:i A', strtotime( $post->post_modified ) );
 				$publish_date_datetime = mysql2date('c', $post->post_modified );
@@ -140,7 +141,7 @@ $list[]=<<<ITEM
 		{$thumbnail}
 		<div class="header-content">
 			<div class="top-line">
-				{$post_title}<span class="post-meta"><span class="post-type">{$post->post_type}</span><span class="post-state">{$post_status}</span></span>
+				{$post_title}<span class="post-meta"><span class="meta-sep"> - </span><span class="post-type">{$post->post_type}</span><span class="meta-sep"> - </span><span class="post-state">{$post_status}</span></span>
 				{$actions}
 			</div>
 			<div class="bottom-line post-meta">
@@ -407,7 +408,7 @@ ITEM;
 		);
 
 		wp_add_dashboard_widget( self::WIDGET_ID, self::WIDGET_TITLE, array( __CLASS__, 'display' ), array( __CLASS__, 'config' ) );
-		wp_enqueue_style( 'recw', plugins_url( '/css/dist/recently-edited-content-widget.min.css', __FILE__ ) );
+		wp_enqueue_style( 'recw', plugins_url( '/css/dist/recently-edited-content-widget.min.css', __FILE__ ), array(), self::VERSION );
 	}
 
 

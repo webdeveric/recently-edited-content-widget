@@ -152,12 +152,17 @@
 								color:#444;
 								text-transform: capitalize;
 								font-size:.88em;
-								.post-type::before,
-								.post-state::before{
-									content:'-';
-									margin:0 3px;
+								margin:0 0 0 2px;
+
+								.meta-sep,
+								.post-type,
+								.post-state{
+									display:inline-block;
+									padding:0 2px;
 								}
+
 							}
+
 						}
 
 						.row-actions{
