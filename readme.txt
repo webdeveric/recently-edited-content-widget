@@ -33,6 +33,7 @@ Options (per user settings):
 = 0.2.10 =
 * Updated styles
 * Began using Grunt and SASS/Compass
+* Added action links like what is on the edit posts screen.
 
 = 0.2.9 =
 * Fixed PHP warning when WP_DEBUG is true.

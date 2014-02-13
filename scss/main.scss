@@ -74,12 +74,10 @@
 					position:relative;
 					padding:10px 14px;
 
+					@include box-shadow(inset 0 0 0 1px #FFF);
+
 					&.odd{
 						background-color:#FAFAFA;	
-					}
-
-					&.publish .post-state{
-						display: none;
 					}
 
 					&.pending{
@@ -123,35 +121,80 @@
 					.header{
 						@include pie-clearfix;
 
-						font-weight: bold;
 						text-shadow:1px 1px 0 #FFF;
+
+						.thumbnail{
+							position:relative;
+							float:left;
+							width:2.5em;
+							height:2.5em;
+							margin:0 6px 0 0;
+							overflow:hidden;
+							background-color:#C44;
+							background-position: center center;
+							background-repeat: no-repeat;
+							background-size:contain;
+							border:1px solid #FFF;
+						}
+
+						.header-content{
+						}
 
 						.post-title{
 							font-size:1.0769em;
 						}
 
-						.post-type,
-						.post-state{
-							color:#444;
+						.top-line{
+							font-weight: bold;
+
+							.post-meta{
+								display:inline-block;
+								color:#444;
+								text-transform: capitalize;
+								font-size:.88em;
+								.post-type::before,
+								.post-state::before{
+									content:'-';
+									margin:0 3px;
+								}
+							}
 						}
 
 						.row-actions{
+							display: inline-block;
+							vertical-align: top;
 							float: right;
-							font-weight: normal;
+							font-weight:normal;
+							margin:-2px;
+							padding:2px 4px;
+							color:#DDD;
+							@include border-radius(3px);
+
+							span{
+								display: inline-block;
+								padding:0 3px;
+							}
+
 						}
 
 					}
 
 					.post-meta{
 						display: block;
+						font-size:.9225em;
 						color:rgba(0,0,0,.66);	
 					}
 
 					.content{
 						margin:10px 0 0 0;
+						overflow: hidden;
 
-						p:last-child{
-							margin-bottom:0;
+						p{
+							margin:0;
+						}
+
+						p + p{
+							margin-top:10px;
 						}
 					}
 
