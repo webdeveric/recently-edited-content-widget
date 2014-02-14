@@ -53,7 +53,7 @@ class RECW_Dashboard_Widget {
 	}
 
 	public static function excerpt_more( $more ){
-		return '&hellip;';
+		return self::$options['excerpt_length'] > 0 ? '&hellip;' : '';
 	}
 
 	public static function display(){
@@ -96,9 +96,10 @@ class RECW_Dashboard_Widget {
 				if( $user_can_edit = current_user_can( 'edit_post', $post->ID ) ){
 					$post_title_link_title = sprintf( __( 'Edit &#8220;%s&#8221;' ), esc_attr( $post_title ) );
 					$url = $post->post_status == 'trash' ? add_query_arg('post', get_the_ID(), 'edit.php?post_status=trash&post_type=post') : get_edit_post_link( get_the_ID() );
-					$post_title = sprintf('<a href="%s" title="%s" class="post-title">%s</a>', $url, $post_title_link_title, esc_html( $post_title ) );
+					$post_title = sprintf('<a href="%s" title="%s">%s</a>', $url, $post_title_link_title, esc_html( $post_title ) );
 				} else {
-					$post_title = sprintf('<span class="post-title">%s</span>', esc_html( $post_title ) );
+					// $post_title = sprintf('<span class="post-title">%s</span>', esc_html( $post_title ) );
+					$post_title = esc_html( $post_title );
 				}
 
 				$post_status = $post->post_status == 'publish' ? 'published' : $post->post_status;
@@ -116,20 +117,33 @@ class RECW_Dashboard_Widget {
 
 				$author_name = get_userdata( $author_id )->display_name;
 				$author = current_user_can('edit_users') ? sprintf('<a href="%1$s" title="Edit %2$s">%2$s</a>', get_edit_user_link( $author_id), $author_name ) : $author_name;
+				$author = sprintf('<cite>%s</cite>', $author );
+
 				unset( $author_id, $author_name );
 
 				$even_odd = $even ? 'even' : 'odd';
 				$even = !$even;
 
 				$thumbnail_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ) );
-				$thumbnail = '';
-				if( $thumbnail_url !== false ){
-					list( $thumbnail_url ) = $thumbnail_url;
-					if( $user_can_edit )
-						$thumbnail = sprintf('<a href="%s" class="thumbnail" style="background-image:url(%s);"></a>', $url, $thumbnail_url );
-					else
-						$thumbnail = sprintf('<div class="thumbnail" style="background-image:url(%s);"></div>', $thumbnail_url );
 
+				if( $thumbnail_url !== false )
+					list( $thumbnail_url ) = $thumbnail_url;
+
+				$background_color = self::get_admin_color( 3 );
+
+				switch( true ){
+					case $thumbnail_url !== false && $user_can_edit:
+						$thumbnail = sprintf('<a href="%s" class="thumbnail" style="background-color:%s; background-image:url(%s);"></a>', $url, $background_color, $thumbnail_url );
+					break;
+					case $thumbnail_url !== false && ! $user_can_edit:
+						$thumbnail = sprintf('<div class="thumbnail" style="background-color:%s; background-image:url(%s);"></div>', $background_color, $thumbnail_url );
+					break;
+					case $thumbnail_url === false && $user_can_edit:
+						$thumbnail = sprintf('<a href="%s" class="thumbnail empty" style="background-color:%s;"></a>', $url, $background_color );
+					break;
+					// case $thumbnail_url === false && ! $user_can_edit:
+					default:
+						$thumbnail = sprintf('<div class="thumbnail empty" style="background-color:%s;"></div>', $background_color );
 				}
 
 				$actions = self::get_action_links();
@@ -137,21 +151,23 @@ class RECW_Dashboard_Widget {
 $list[]=<<<ITEM
 
 <div class="dashboard-recw-item {$post->post_status} {$even_odd} post-type-{$post->post_type}">
-	<div class="header">
-		{$thumbnail}
-		<div class="header-content">
-			<div class="top-line">
-				{$post_title}<span class="post-meta"><span class="meta-sep"> - </span><span class="post-type">{$post->post_type}</span><span class="meta-sep"> - </span><span class="post-state">{$post_status}</span></span>
-				{$actions}
-			</div>
-			<div class="bottom-line post-meta">
-				<span class="post-editor">Edited by {$author}</span> on <time class="publish-date" datetime="{$publish_date_datetime}">{$publish_date}</time>
-			</div>
-		</div>
-		
-	</div>
+	{$thumbnail}
+	<div class="dashboard-recw-item-wrap">
 
-	<div class="content">{$excerpt}</div>
+		<h4 class="post-title">
+			{$post_title}
+			<span class="post-type-meta"><span class="meta-sep"> - </span><span class="post-type">{$post->post_type}</span><span class="meta-sep"> - </span><span class="post-state">{$post_status}</span></span>
+		</h4>
+
+		<div class="post-meta">
+			<span class="post-editor">Edited by {$author}</span> on <time class="publish-date" datetime="{$publish_date_datetime}">{$publish_date}</time>
+		</div>
+
+		{$excerpt}
+
+		{$actions}
+
+	</div>
 
 </div>
 
@@ -164,11 +180,8 @@ ITEM;
 			remove_filter( 'excerpt_length', array( __CLASS__, 'excerpt_length'), PHP_INT_MAX );
 			remove_filter( 'excerpt_more', array( __CLASS__, 'excerpt_more'), PHP_INT_MAX );	
 
-	?>
-		<ul id="recently-edited-content-list">
-			<li><?php echo implode( '</li><li>', $list ); ?></li>
-		</ul>
-	<?php
+			echo implode( '', $list );
+
 		} else {
 
 			$message = '<p>There isn&#8217;t any recently edited content in the system.</p>';
@@ -186,6 +199,17 @@ ITEM;
 
 		}
 
+	}
+
+	public static function get_admin_color( $index = 0, $default_color = '#333' ){
+		static $colors = null;
+		if( ! isset( $colors ) ){
+			global $wp_styles, $_wp_admin_css_colors;
+			$color_scheme = get_user_option( 'admin_color' );
+			if( isset( $color_scheme ) && $color_scheme !== false && $color_scheme != '' )
+				$colors = $_wp_admin_css_colors[ $color_scheme ]->colors;
+		}
+		return isset( $colors[ $index ] ) ? $colors[ $index ] : $default_color;
 	}
 
 	public static function get_action_links(){
@@ -230,7 +254,7 @@ ITEM;
 			$action_links[] = sprintf('<span class="%s">%s</span>', $action, $link );
 		}
 
-		return '<div class="row-actions">' . implode('|', $action_links ) . '</div>';
+		return '<p class="row-actions">' . implode('|', $action_links ) . '</p>';
 	}
 
 	public static function config( $empty_str = '', $config = array() ){

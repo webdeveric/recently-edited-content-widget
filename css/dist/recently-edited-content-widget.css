@@ -1,15 +1,37 @@
-/* line 7, ../../scss/main.scss */
+/* line 5, ../../scss/main.scss */
+#dashboard-widgets h4.post-title {
+  margin: 0;
+  font-weight: bold;
+}
+/* line 8, ../../scss/main.scss */
+#dashboard-widgets h4.post-title .post-type-meta {
+  display: inline-block;
+  color: #444;
+  font-weight: normal;
+  text-transform: capitalize;
+  font-size: .8em;
+  margin: 0 0 0 2px;
+}
+/* line 18, ../../scss/main.scss */
+#dashboard-widgets h4.post-title .post-type-meta .meta-sep,
+#dashboard-widgets h4.post-title .post-type-meta .post-type,
+#dashboard-widgets h4.post-title .post-type-meta .post-state {
+  display: inline-block;
+  padding: 0 2px;
+}
+
+/* line 27, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form {
   padding: 10px;
   margin: 0;
 }
-/* line 12, ../../scss/main.scss */
+/* line 32, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form p,
 #recently-edited-content .dashboard-widget-control-form ul {
   margin: 0 0 10px 0;
   overflow: hidden;
 }
-/* line 17, ../../scss/main.scss */
+/* line 37, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form label {
   float: left;
   display: block;
@@ -17,14 +39,14 @@
   padding: 4px;
   margin-right: 10px;
 }
-/* line 25, ../../scss/main.scss */
+/* line 45, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form li {
   float: left;
   width: 25%;
   margin: 0 0 10px 0;
   overflow: hidden;
 }
-/* line 31, ../../scss/main.scss */
+/* line 51, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form li label {
   display: inline;
   padding: 0;
@@ -32,173 +54,143 @@
   width: auto;
   float: none;
 }
-/* line 38, ../../scss/main.scss */
+/* line 58, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form li label input {
   vertical-align: middle;
 }
-/* line 42, ../../scss/main.scss */
+/* line 62, ../../scss/main.scss */
 #recently-edited-content .dashboard-widget-control-form li label:hover {
   color: #d54e21;
 }
-/* line 52, ../../scss/main.scss */
+/* line 72, ../../scss/main.scss */
 #recently-edited-content .inside {
   margin: 0;
   padding: 0;
 }
-/* line 56, ../../scss/main.scss */
+/* line 76, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-notice {
   padding: 10px;
 }
-/* line 58, ../../scss/main.scss */
+/* line 78, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-notice p {
   margin: 0;
   padding: 0;
 }
-/* line 64, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list {
-  margin: 0;
-  padding: 0;
-}
-/* line 68, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li {
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid #e5e5e5;
-}
-/* line 73, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item {
+/* line 84, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item {
   position: relative;
   padding: 10px 14px;
-  -webkit-box-shadow: inset 0 0 0 1px white;
-  -moz-box-shadow: inset 0 0 0 1px white;
-  box-shadow: inset 0 0 0 1px white;
+  -webkit-box-shadow: inset 0 1px 0 0 #e5e5e5;
+  -moz-box-shadow: inset 0 1px 0 0 #e5e5e5;
+  box-shadow: inset 0 1px 0 0 #e5e5e5;
 }
-/* line 79, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.odd {
+/* line 89, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item:first-child {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+/* line 93, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item.odd {
   background-color: #FAFAFA;
 }
-/* line 83, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.pending {
+/* line 97, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item.pending {
   background-image: url(../../imgs/45-deg-gold.png);
   border-left: 4px solid #dd823b;
 }
-/* line 88, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.draft {
+/* line 102, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item.draft {
   background-image: url(../../imgs/wavy-lines-green.png);
   border-left: 4px solid #9ea476;
 }
-/* line 93, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.trash {
+/* line 107, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item.trash {
   background-image: url(../../imgs/red-x.png);
   border-left: 4px solid #e14d43;
 }
-/* line 98, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.future {
+/* line 112, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item.future {
   background-image: url(../../imgs/chronometer.png), url(../../imgs/45-deg-white.png);
   background-repeat: no-repeat, repeat;
   background-position: 98% 10px, 0 0;
   border-left: 4px solid #52accc;
 }
-/* line 108, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.pending, #recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.draft, #recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.trash, #recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item.future {
+/* line 122, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item.pending, #recently-edited-content .inside .dashboard-recw-item.draft, #recently-edited-content .inside .dashboard-recw-item.trash, #recently-edited-content .inside .dashboard-recw-item.future {
   padding: 10px;
 }
-/* line 112, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item:hover {
+/* line 126, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item:hover {
   background-color: #FFF;
 }
-/* line 115, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item:hover .row-actions {
+/* line 129, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item:hover .row-actions {
   visibility: visible;
 }
-/* line 121, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header {
-  *zoom: 1;
-  text-shadow: 1px 1px 0 white;
-}
-/* line 38, ../../../../../../../../../../usr/share/compass/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-/* line 126, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .thumbnail {
+/* line 135, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .thumbnail {
   position: relative;
   float: left;
-  width: 2.5em;
-  height: 2.5em;
-  margin: 0 6px 0 0;
+  width: 4em;
+  height: 4em;
+  margin: 0 0.75em 0 0;
   overflow: hidden;
-  background-color: #C44;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
   border: 1px solid white;
 }
-/* line 143, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .post-title {
-  font-size: 1.0769em;
+/* line 148, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .thumbnail.empty::before {
+  content: "\f128";
+  font: 3em/1.333em dashicons;
+  color: #FFF;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
-/* line 147, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .top-line {
-  font-weight: bold;
+/* line 164, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .dashboard-recw-item-wrap {
+  overflow: hidden;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
-/* line 150, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .top-line .post-meta {
-  display: inline-block;
-  color: #444;
-  text-transform: capitalize;
-  font-size: .88em;
-  margin: 0 0 0 2px;
+/* line 170, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .header {
+  text-shadow: 1px 1px 0 white;
 }
-/* line 159, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .top-line .post-meta .meta-sep,
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .top-line .post-meta .post-type,
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .top-line .post-meta .post-state {
-  display: inline-block;
-  padding: 0 2px;
+/* line 174, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .post-meta {
+  margin: 0 0 10px 0;
 }
-/* line 168, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .row-actions {
-  display: inline-block;
-  vertical-align: top;
-  float: right;
-  font-weight: normal;
-  margin: -2px;
-  padding: 2px 4px;
-  color: #DDD;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
+/* line 176, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .post-meta .post-editor cite {
+  font-style: normal;
 }
-/* line 178, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .header .row-actions span {
+/* line 181, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item p {
+  margin: 0;
+}
+/* line 185, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item p + p {
+  margin-top: 10px;
+}
+/* line 189, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .row-actions {
+  margin-top: 4px;
+}
+/* line 192, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .row-actions span {
   display: inline-block;
   padding: 0 3px;
 }
-/* line 187, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .post-meta {
-  display: block;
-  font-size: .9225em;
-  color: rgba(0, 0, 0, 0.66);
-}
-/* line 193, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .content {
-  margin: 10px 0 0 0;
-  overflow: hidden;
-}
-/* line 197, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .content p {
-  margin: 0;
-}
-/* line 201, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li .dashboard-recw-item .content p + p {
-  margin-top: 10px;
-}
-/* line 208, ../../scss/main.scss */
-#recently-edited-content .inside > ul#recently-edited-content-list > li:first-child {
-  border-top: 0;
+/* line 196, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .row-actions span:first-child {
+  padding-left: 0;
 }
