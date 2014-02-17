@@ -136,12 +136,13 @@
   height: 4em;
   margin: 0 0.75em 0 0;
   overflow: hidden;
+  background-color: #FFF;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
   border: 1px solid white;
 }
-/* line 148, ../../scss/main.scss */
+/* line 149, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .thumbnail.empty::before {
   content: "\f128";
   font: 3em/1.333em dashicons;
@@ -151,7 +152,7 @@
   height: 100%;
   text-align: center;
 }
-/* line 164, ../../scss/main.scss */
+/* line 165, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .dashboard-recw-item-wrap {
   overflow: hidden;
   -ms-word-break: break-all;
@@ -161,36 +162,36 @@
   -moz-hyphens: auto;
   hyphens: auto;
 }
-/* line 170, ../../scss/main.scss */
+/* line 171, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .header {
   text-shadow: 1px 1px 0 white;
 }
-/* line 174, ../../scss/main.scss */
+/* line 175, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .post-meta {
   margin: 0 0 10px 0;
 }
-/* line 176, ../../scss/main.scss */
+/* line 177, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .post-meta .post-editor cite {
   font-style: normal;
 }
-/* line 181, ../../scss/main.scss */
+/* line 182, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item p {
   margin: 0;
 }
-/* line 185, ../../scss/main.scss */
+/* line 186, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item p + p {
   margin-top: 10px;
 }
-/* line 189, ../../scss/main.scss */
+/* line 190, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .row-actions {
   margin-top: 4px;
 }
-/* line 192, ../../scss/main.scss */
+/* line 193, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .row-actions span {
   display: inline-block;
   padding: 0 3px;
 }
-/* line 196, ../../scss/main.scss */
+/* line 197, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .row-actions span:first-child {
   padding-left: 0;
 }

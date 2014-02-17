@@ -6,12 +6,12 @@ Plugin Group: Dashboard Widgets
 Author: Eric King
 Author URI: http://webdeveric.com/
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
-Version: 0.2.10
+Version: 0.2.11
 */
 
 class RECW_Dashboard_Widget {
 
-	const VERSION		= '0.2.10';
+	const VERSION		= '0.2.11';
 
 	const WIDGET_ID		= 'recently-edited-content';
 	const WIDGET_TITLE	= 'Recent Content';
@@ -129,21 +129,19 @@ class RECW_Dashboard_Widget {
 				if( $thumbnail_url !== false )
 					list( $thumbnail_url ) = $thumbnail_url;
 
-				$background_color = self::get_admin_color( 3 );
-
 				switch( true ){
 					case $thumbnail_url !== false && $user_can_edit:
-						$thumbnail = sprintf('<a href="%s" class="thumbnail" style="background-color:%s; background-image:url(%s);"></a>', $url, $background_color, $thumbnail_url );
+						$thumbnail = sprintf('<a href="%s" class="thumbnail" style="background-image: url(%s);"></a>', $url, $thumbnail_url );
 					break;
 					case $thumbnail_url !== false && ! $user_can_edit:
-						$thumbnail = sprintf('<div class="thumbnail" style="background-color:%s; background-image:url(%s);"></div>', $background_color, $thumbnail_url );
+						$thumbnail = sprintf('<div class="thumbnail" style="background-image: url(%s);"></div>', $thumbnail_url );
 					break;
 					case $thumbnail_url === false && $user_can_edit:
-						$thumbnail = sprintf('<a href="%s" class="thumbnail empty" style="background-color:%s;"></a>', $url, $background_color );
+						$thumbnail = sprintf('<a href="%s" class="thumbnail empty"></a>', $url );
 					break;
 					// case $thumbnail_url === false && ! $user_can_edit:
 					default:
-						$thumbnail = sprintf('<div class="thumbnail empty" style="background-color:%s;"></div>', $background_color );
+						$thumbnail = '<div class="thumbnail empty"></div>';
 				}
 
 				$actions = self::get_action_links();
@@ -366,6 +364,8 @@ ITEM;
 		if( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_others_posts' ) ) )
 			return;
 
+		add_action( 'admin_head-index.php', array( __CLASS__, 'admin_head' ) );
+
 		self::$fields = array(
 			'num_items' => array(
 				'type'	=> 'int',
@@ -435,19 +435,20 @@ ITEM;
 		wp_enqueue_style( 'recw', plugins_url( '/css/dist/recently-edited-content-widget.min.css', __FILE__ ), array(), self::VERSION );
 	}
 
+	public static function admin_head(){
+		printf('<style>#recently-edited-content .inside .dashboard-recw-item .thumbnail.empty{background-color:%s;}</style>', self::get_admin_color( 3 ) );
+	}
 
 	public static function activate(){
 		self::load_options( true );
 	}
-
 
 	public static function deactivate(){
 		self::remove_options();
 	}
 
 }
-add_action('wp_dashboard_setup', array('RECW_Dashboard_Widget', 'init') );
 
-register_activation_hook( __FILE__, array('RECW_Dashboard_Widget', 'activate' ) );
-
-register_deactivation_hook( __FILE__, array('RECW_Dashboard_Widget', 'deactivate' ) );
+add_action( 'wp_dashboard_setup',		array( 'RECW_Dashboard_Widget', 'init' ) );
+register_activation_hook( __FILE__,		array( 'RECW_Dashboard_Widget', 'activate' ) );
+register_deactivation_hook( __FILE__,	array( 'RECW_Dashboard_Widget', 'deactivate' ) );

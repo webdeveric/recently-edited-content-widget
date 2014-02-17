@@ -6,7 +6,7 @@ Plugin URI: http://phplug.in/
 Tags: dashboard, widget, dashboard widget, edited, post types, recent content, recently edited, user preferences
 Requires at least: 3.0.0
 Tested up to: 3.8.1
-Stable tag: 0.2.10
+Stable tag: 0.2.11
 
 This plugin provides a dashboard widget that lists recently edited content for quick access.
 
@@ -30,9 +30,13 @@ Options (per user settings):
 
 == Changelog ==
 
+= 0.2.11 =
+* Updated layout and styles.
+* Updated empty featured image box styles to use a color from the user's admin color scheme.
+
 = 0.2.10 =
-* Updated styles
-* Began using Grunt and SASS/Compass
+* Updated styles.
+* Began using Grunt and SASS/Compass.
 * Added action links like what is on the edit posts screen.
 
 = 0.2.9 =
