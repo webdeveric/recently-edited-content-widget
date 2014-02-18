@@ -143,7 +143,7 @@
   border: 1px solid white;
 }
 /* line 149, ../../scss/main.scss */
-#recently-edited-content .inside .dashboard-recw-item .thumbnail.empty::before {
+#recently-edited-content .inside .dashboard-recw-item .thumbnail.has-dashicons.empty::before {
   content: "\f128";
   font: 3em/1.333em dashicons;
   color: #FFF;
@@ -152,7 +152,14 @@
   height: 100%;
   text-align: center;
 }
-/* line 165, ../../scss/main.scss */
+/* line 159, ../../scss/main.scss */
+#recently-edited-content .inside .dashboard-recw-item .thumbnail.no-dashicons.empty {
+  background-image: url(../../imgs/icon-image.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+/* line 172, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .dashboard-recw-item-wrap {
   overflow: hidden;
   -ms-word-break: break-all;
@@ -162,36 +169,36 @@
   -moz-hyphens: auto;
   hyphens: auto;
 }
-/* line 171, ../../scss/main.scss */
+/* line 178, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .header {
   text-shadow: 1px 1px 0 white;
 }
-/* line 175, ../../scss/main.scss */
+/* line 182, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .post-meta {
   margin: 0 0 10px 0;
 }
-/* line 177, ../../scss/main.scss */
+/* line 184, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .post-meta .post-editor cite {
   font-style: normal;
 }
-/* line 182, ../../scss/main.scss */
+/* line 189, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item p {
   margin: 0;
 }
-/* line 186, ../../scss/main.scss */
+/* line 193, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item p + p {
   margin-top: 10px;
 }
-/* line 190, ../../scss/main.scss */
+/* line 197, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .row-actions {
   margin-top: 4px;
 }
-/* line 193, ../../scss/main.scss */
+/* line 200, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .row-actions span {
   display: inline-block;
   padding: 0 3px;
 }
-/* line 197, ../../scss/main.scss */
+/* line 204, ../../scss/main.scss */
 #recently-edited-content .inside .dashboard-recw-item .row-actions span:first-child {
   padding-left: 0;
 }

@@ -146,7 +146,7 @@
 				background-size:contain;
 				border:1px solid #FFF;
 
-				&.empty::before{
+				&.has-dashicons.empty::before{
 					content: "\f128";
 					font:3em/1.333em dashicons;
 					color:#FFF;
@@ -154,6 +154,13 @@
 					width:100%;
 					height:100%;
 					text-align:center;
+				}
+
+				&.no-dashicons.empty{
+					background-image:url(../../imgs/icon-image.png);
+					background-position: center center;
+					background-repeat: no-repeat;
+					background-size:auto;
 				}
 
 				&.empty:hover{

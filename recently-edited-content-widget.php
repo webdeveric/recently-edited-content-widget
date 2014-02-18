@@ -6,12 +6,12 @@ Plugin Group: Dashboard Widgets
 Author: Eric King
 Author URI: http://webdeveric.com/
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
-Version: 0.2.11
+Version: 0.2.12
 */
 
 class RECW_Dashboard_Widget {
 
-	const VERSION		= '0.2.11';
+	const VERSION		= '0.2.12';
 
 	const WIDGET_ID		= 'recently-edited-content';
 	const WIDGET_TITLE	= 'Recent Content';
@@ -86,6 +86,8 @@ class RECW_Dashboard_Widget {
 			add_filter( 'excerpt_length', array( __CLASS__, 'excerpt_length'), PHP_INT_MAX );
 			add_filter( 'excerpt_more', array( __CLASS__, 'excerpt_more'), PHP_INT_MAX );
 
+			$dashicons_class = version_compare( get_bloginfo('version'), '3.8', '>=' ) ? 'has-dashicons' : 'no-dashicons';
+
 			while( $recent_content->have_posts() ):
 				
 				$recent_content->the_post();
@@ -131,17 +133,17 @@ class RECW_Dashboard_Widget {
 
 				switch( true ){
 					case $thumbnail_url !== false && $user_can_edit:
-						$thumbnail = sprintf('<a href="%s" class="thumbnail" style="background-image: url(%s);"></a>', $url, $thumbnail_url );
+						$thumbnail = sprintf('<a href="%1$s" class="thumbnail %3$s" style="background-image: url(%2$s);"></a>', $url, $thumbnail_url, $dashicons_class );
 					break;
 					case $thumbnail_url !== false && ! $user_can_edit:
-						$thumbnail = sprintf('<div class="thumbnail" style="background-image: url(%s);"></div>', $thumbnail_url );
+						$thumbnail = sprintf('<div class="thumbnail %2$s" style="background-image: url(%1$s);"></div>', $thumbnail_url, $dashicons_class );
 					break;
 					case $thumbnail_url === false && $user_can_edit:
-						$thumbnail = sprintf('<a href="%s" class="thumbnail empty"></a>', $url );
+						$thumbnail = sprintf('<a href="%1$s" class="thumbnail %2$s empty"></a>', $url, $dashicons_class );
 					break;
 					// case $thumbnail_url === false && ! $user_can_edit:
 					default:
-						$thumbnail = '<div class="thumbnail empty"></div>';
+						$thumbnail = sprintf('<div class="thumbnail %1$s empty"></div>', $dashicons_class );
 				}
 
 				$actions = self::get_action_links();
@@ -361,6 +363,7 @@ ITEM;
 	}
 
 	public static function init(){
+
 		if( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_others_posts' ) ) )
 			return;
 
