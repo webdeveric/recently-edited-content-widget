@@ -6,7 +6,7 @@ Plugin Group: Dashboard Widgets
 Author: Eric King
 Author URI: http://webdeveric.com/
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
-Version: 0.2.12
+Version: 0.2.13
 */
 
 class RECW_Dashboard_Widget {
@@ -118,7 +118,7 @@ class RECW_Dashboard_Widget {
 				}
 
 				$author_name = get_userdata( $author_id )->display_name;
-				$author = current_user_can('edit_users') ? sprintf('<a href="%1$s" title="Edit %2$s">%2$s</a>', get_edit_user_link( $author_id), $author_name ) : $author_name;
+				$author = current_user_can('edit_users') && function_exists(' get_edit_user_link') ? sprintf('<a href="%1$s" title="Edit %2$s">%2$s</a>', get_edit_user_link( $author_id), $author_name ) : $author_name;
 				$author = sprintf('<cite>%s</cite>', $author );
 
 				unset( $author_id, $author_name );
@@ -236,9 +236,13 @@ ITEM;
 		}
 
 		if( $post_type_object->public ){
-			if( in_array( $post->post_status, array( 'pending', 'draft', 'future' ) ) ){
-				if( $can_edit_post )
-					$actions['view'] = '<a href="' . esc_url( apply_filters( 'preview_post_link', set_url_scheme( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'Preview' ) . '</a>';
+			if( in_array( $post->post_status, array( 'pending', 'auto-draft', 'draft', 'future' ) ) ){
+				if( $can_edit_post ){
+					$preview_url = add_query_arg( 'preview', 'true', get_permalink( $post->ID ) );
+					if( function_exists('set_url_scheme') )
+						$preview_url = set_url_scheme( $preview_url );
+					$actions['view'] = '<a href="' . esc_url( apply_filters( 'preview_post_link', $preview_url ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'Preview' ) . '</a>';
+				}
 			} elseif( 'trash' != $post->post_status ){
 				$actions['view'] = '<a href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'View' ) . '</a>';
 			}
@@ -427,6 +431,7 @@ ITEM;
 					'publish'	=> true,
 					'pending'	=> true,
 					'draft'		=> true,
+					//'auto-draft'=> true,
 					'future'	=> true,
 					'private'	=> true,
 					'trash'		=> true
