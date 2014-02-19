@@ -62,6 +62,8 @@ class RECW_Dashboard_Widget {
 
 		global $post;
 
+		$wp_version = get_bloginfo('version');
+
 		$get_posts_args = array(
 			'suppress_filters' => true,
 			'post_type' => array_keys( self::$options['post_types'] ),
@@ -71,6 +73,10 @@ class RECW_Dashboard_Widget {
 			'order' => 'DESC',
 			// 'perm' => 'edit_posts'
 		);
+
+		if( version_compare( $wp_version, '3.2', '<' ) ){
+			$get_posts_args['post_status'] = implode(',', $get_posts_args['post_status'] );
+		}
 
 		if( self::$options['current_user_only'] == true ){
 			$get_posts_args['meta_key'] = '_edit_last';
@@ -86,7 +92,7 @@ class RECW_Dashboard_Widget {
 			add_filter( 'excerpt_length', array( __CLASS__, 'excerpt_length'), PHP_INT_MAX );
 			add_filter( 'excerpt_more', array( __CLASS__, 'excerpt_more'), PHP_INT_MAX );
 
-			$dashicons_class = version_compare( get_bloginfo('version'), '3.8', '>=' ) ? 'has-dashicons' : 'no-dashicons';
+			$dashicons_class = version_compare( $wp_version, '3.8', '>=' ) ? 'has-dashicons' : 'no-dashicons';
 
 			while( $recent_content->have_posts() ):
 				
@@ -314,13 +320,16 @@ ITEM;
 					if( isset( $opt['values'] ) ){
 						$checkboxes = array();
 						foreach( $opt['values'] as $name => $label ){
-							//printf('<pre>%s</pre>', print_r( $post_type, true ) );
+
+							$opt_checked = isset( self::$options[ $option_name ][ $name ] ) ? self::$options[ $option_name ][ $name ] : 0;
+
 							$checkboxes[] = sprintf(
 								'<label><input id="' . self::WIDGET_ID . '-' . $option_name . '" name="'.$form_id.'[' . $option_name . '][' . $name . ']" type="' . $opt['input'] . '" value="%s" %s /> %s</label>',
 								true,
-								checked( self::$options[ $option_name ][ $name ], true, false ),
+								checked( $opt_checked, true, false ),
 								$label
 							);
+
 						}
 						echo '<ul><li>' . implode('</li><li>', $checkboxes ) . '</li></ul>';
 					} else {
