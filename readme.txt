@@ -28,6 +28,11 @@ Options (per user settings):
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Go to dashboard and see for yourself.
 
+== Screenshots ==
+
+1. This dashboard widget shows you content that was edited recently and styles each item by status (draft, publish, etc).
+2. There are several configuration options available.
+
 == Changelog ==
 
 = 0.2.13 =

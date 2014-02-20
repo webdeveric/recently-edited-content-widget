@@ -11,7 +11,7 @@ Version: 0.2.13
 
 class RECW_Dashboard_Widget {
 
-	const VERSION		= '0.2.12';
+	const VERSION		= '0.2.13';
 
 	const WIDGET_ID		= 'recently-edited-content';
 	const WIDGET_TITLE	= 'Recent Content';
@@ -74,6 +74,7 @@ class RECW_Dashboard_Widget {
 			// 'perm' => 'edit_posts'
 		);
 
+		// Prior to WP 3.2, the post_status argument was assumed to be a string.
 		if( version_compare( $wp_version, '3.2', '<' ) ){
 			$get_posts_args['post_status'] = implode(',', $get_posts_args['post_status'] );
 		}
