@@ -6,12 +6,12 @@ Plugin Group: Dashboard Widgets
 Author: Eric King
 Author URI: http://webdeveric.com/
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
-Version: 0.2.13
+Version: 0.2.14
 */
 
 class RECW_Dashboard_Widget {
 
-	const VERSION		= '0.2.13';
+	const VERSION		= '0.2.14';
 
 	const WIDGET_ID		= 'recently-edited-content';
 	const WIDGET_TITLE	= 'Recent Content';
@@ -66,8 +66,8 @@ class RECW_Dashboard_Widget {
 
 		$get_posts_args = array(
 			'suppress_filters' => true,
-			'post_type' => array_keys( self::$options['post_types'] ),
-			'post_status' => array_keys( self::$options['post_status'] ),
+			'post_type' => array_keys( array_filter( self::$options['post_types'] ) ),
+			'post_status' => array_keys( array_filter( self::$options['post_status'] ) ),
 			'posts_per_page' => self::$options['num_items'],
 			'orderby' => 'modified',
 			'order' => 'DESC',
@@ -268,26 +268,38 @@ ITEM;
 		return '<p class="row-actions">' . implode('|', $action_links ) . '</p>';
 	}
 
+	public static function number_in_range( $num, $min, $max ){
+		return min( max( $min, $num ), $max );
+	}
+
 	public static function config( $empty_str = '', $config = array() ){
 		$form_id = self::WIDGET_ID . '-control';
 
 		self::load_options();
 
-		if( 'POST' == $_SERVER['REQUEST_METHOD'] && isset( $_POST[ $form_id ] ) ){
+		if( filter_has_var( INPUT_POST, $form_id ) && isset( $_POST[ $form_id ] ) ){
+
+			$data = $_POST[ $form_id ];
 
 			foreach( self::$fields as $option_name => $opt ){
 
 				switch( $opt['type'] ){
 					case 'int':
 
-						if( isset( $_POST[ $form_id ][ $option_name ] ) && is_numeric( $_POST[ $form_id ][ $option_name ] ) ){
-							self::$options[ $option_name ] = (int)$_POST[ $form_id ][ $option_name ];
-							if( isset( self::$fields[ $option_name ]['minvalue'] ) && self::$options[ $option_name ] < self::$fields[ $option_name ]['minvalue'] )
-								self::$options[ $option_name ] = self::$fields[ $option_name ]['minvalue'];
-							if( isset( self::$fields[ $option_name ]['maxvalue'] ) && self::$options[ $option_name ] > self::$fields[ $option_name ]['maxvalue'] )
-								self::$options[ $option_name ] = self::$fields[ $option_name ]['maxvalue'];
+						if( isset( $data[ $option_name ] ) && is_numeric( $data[ $option_name ] ) ){
+
+							self::$options[ $option_name ] = (int)$data[ $option_name ];
+
+							if( isset( $opt['minvalue'] ) && self::$options[ $option_name ] < $opt['minvalue'] )
+								self::$options[ $option_name ] = $opt['minvalue'];
+
+							if( isset( $opt['maxvalue'] ) && self::$options[ $option_name ] > $opt['maxvalue'] )
+								self::$options[ $option_name ] = $opt['maxvalue'];
+
 						} else {
-							self::$options[ $option_name ] = self::$fields[ $option_name ]['value'];
+
+							self::$options[ $option_name ] = $opt['value'];
+
 						}
 
 					break;
@@ -295,16 +307,16 @@ ITEM;
 						if( isset( $opt['values'] ) ){
 							self::$options[ $option_name ] = array();
 							foreach( $opt['values'] as $name => $post_type ){
-								if( isset( $_POST[ $form_id ][ $option_name ][ $name ] ) && ( $_POST[ $form_id ][ $option_name ][ $name ] == true || $_POST[ $form_id ][ $option_name ][ $name ] == 'true' ) )
+								if( isset( $data[ $option_name ][ $name ] ) && ( $data[ $option_name ][ $name ] == true || $data[ $option_name ][ $name ] == 'true' ) )
 									self::$options[ $option_name ][ $name ] = true;
 								//printf('<pre>self::$options[ %s ][ %s ] = %d</pre>', $option_name , $name, self::$options[ $option_name ][ $name ] );
 							}
 						} else {
-							self::$options[ $option_name ] = ( isset( $_POST[ $form_id ][ $option_name ] ) && ( $_POST[ $form_id ][ $option_name ] == true || $_POST[ $form_id ][ $option_name ] == 'true' ) );
+							self::$options[ $option_name ] = ( isset( $data[ $option_name ] ) && ( $data[ $option_name ] == true || $data[ $option_name ] == 'true' ) );
 						}
 					break;
 					default:
-						self::$options[ $option_name ] = isset( $_POST[ $form_id ][ $option_name ] ) ? esc_html( $_POST[ $form_id ][ $option_name ] ) : self::$fields[ $option_name ]['value'];
+						self::$options[ $option_name ] = isset( $data[ $option_name ] ) ? esc_html( $data[ $option_name ] ) : $opt['value'];
 				}
 
 			}
@@ -325,7 +337,7 @@ ITEM;
 							$opt_checked = isset( self::$options[ $option_name ][ $name ] ) ? self::$options[ $option_name ][ $name ] : 0;
 
 							$checkboxes[] = sprintf(
-								'<label><input id="' . self::WIDGET_ID . '-' . $option_name . '" name="'.$form_id.'[' . $option_name . '][' . $name . ']" type="' . $opt['input'] . '" value="%s" %s /> %s</label>',
+								'<label title="%3$s"><input id="' . self::WIDGET_ID . '-' . $option_name . '" name="'.$form_id.'[' . $option_name . '][' . $name . ']" type="' . $opt['input'] . '" value="%1$s" %2$s /><span>%3$s</span></label>',
 								true,
 								checked( $opt_checked, true, false ),
 								$label
@@ -365,15 +377,39 @@ ITEM;
 		return implode( ' ', $attr );
 	}
 
-	public static function get_post_types(){
-		static $post_types;
-		if( ! isset( $post_types ) ){
-			$post_types = get_post_types('','objects');
-			foreach( $post_types as $name => $type ){
-				$post_types[ $name ] = $type->label;
-			}
+	public static function get_post_type_lables( $do_not_include = array() ){
+		return self::get_object_lables(
+			get_post_types( array(), 'objects' ),
+			$do_not_include
+		);
+	}
+
+	public static function get_post_stati_lables( $do_not_include = array() ){
+		return self::get_object_lables(
+			get_post_stati( array(), 'objects' ),
+			$do_not_include
+		);
+	}
+
+	protected static function get_object_lables( $objects, $do_not_include = array() ){
+		$object_labels = array();
+		foreach( $objects as $name => $type )
+			$object_labels[ $name ] = ucwords( $type->label );
+
+		if( ! is_array( $do_not_include ) ){
+			if( is_string( $do_not_include ) )
+				$do_not_include = array_map( 'trim', explode(',', $do_not_include ) );
+			else
+				$do_not_include = (array)$do_not_include;
 		}
-		return $post_types;
+
+		foreach( $do_not_include as $key )
+			if( array_key_exists( $key, $object_labels ) )
+				unset( $object_labels[ $key ] );
+
+		asort( $object_labels );
+
+		return $object_labels;
 	}
 
 	public static function init(){
@@ -382,6 +418,15 @@ ITEM;
 			return;
 
 		add_action( 'admin_head-index.php', array( __CLASS__, 'admin_head' ) );
+
+		$default_post_types	= array_merge(
+			array_fill_keys( get_post_types( array( 'public' => true ), 'names' ), true ),
+			array_fill_keys( get_post_types( array( 'public' => false ), 'names' ), false )
+		);
+		$default_post_types['attachment'] = false;
+
+		$default_post_stati = array_fill_keys( get_post_stati(), true );
+		$default_post_stati['auto-draft'] = false;
 
 		self::$fields = array(
 			'num_items' => array(
@@ -395,7 +440,7 @@ ITEM;
 			'excerpt_length' => array(
 				'type'	=> 'int',
 				'input'	=> 'number',
-				'label'	=> 'Excerpt length (# of words):',
+				'label'	=> 'Excerpt length <span class="nowrap">(# of words)</span>:',
 				'value'	=> 30,
 				'minvalue' => 0
 			),
@@ -409,47 +454,24 @@ ITEM;
 				'type'	=> 'bool',
 				'input'	=> 'checkbox',
 				'label'	=> 'Post types:',
-				'values'=> self::get_post_types(),
-				'value'	=> array_fill_keys(
-					array_keys(
-						array_diff_key(
-							self::get_post_types(),
-							array(
-								'nav_menu_item'	=> false,
-								'revision'		=> false
-							)
-						)
-					),
-					true
-				)
+				'values'=> self::get_post_type_lables(),
+				'value'	=> $default_post_types
 			),
 			'post_status' => array(
 				'type'	=> 'bool',
 				'input'	=> 'checkbox',
-				'label'	=> 'Post status:',
-				'values'=> array(
-					'publish'		=> 'Published',
-					'pending'		=> 'Pending Review',
-					'draft'			=> 'Draft',
-					//'auto-draft'	=> 'Auto Draft',
-					'future'		=> 'Future',
-					'private'		=> 'Private',
-					'inherit'		=> 'Inherit (Revision)',
-					'trash'			=> 'Trash'
-				),
-				'value'	=> array(
-					'publish'	=> true,
-					'pending'	=> true,
-					'draft'		=> true,
-					//'auto-draft'=> true,
-					'future'	=> true,
-					'private'	=> true,
-					'trash'		=> true
-				)
+				'label'	=> 'Post statuses:',
+				'values'=> self::get_post_stati_lables( array( 'auto-draft' ) ),
+				'value'	=> $default_post_stati
 			)
 		);
 
-		wp_add_dashboard_widget( self::WIDGET_ID, self::WIDGET_TITLE, array( __CLASS__, 'display' ), array( __CLASS__, 'config' ) );
+		wp_add_dashboard_widget(
+			self::WIDGET_ID,
+			apply_filters('recw-dashboard-widget-title', self::WIDGET_TITLE ),
+			array( __CLASS__, 'display' ),
+			array( __CLASS__, 'config' )
+		);
 		wp_enqueue_style( 'recw', plugins_url( '/css/dist/recently-edited-content-widget.min.css', __FILE__ ), array(), self::VERSION );
 	}
 

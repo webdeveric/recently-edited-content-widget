@@ -24,6 +24,10 @@
 
 #recently-edited-content{
 
+	.nowrap{
+		white-space: nowrap;
+	}
+
 	.dashboard-widget-control-form{
 		padding:10px;
 		margin:0;
@@ -40,27 +44,49 @@
 			width:150px;
 			padding:4px;
 			margin-right:10px;
+			font-weight: bold;
 		}
 
 		li{
-			float:left;
-			width:25%;
+			display: inline-block;
+			vertical-align: top;
+
+			width:50%;
 			margin:0 0 10px 0;
-			overflow:hidden;
 
 			label{
-				display:inline;
+				display:block;
 				padding:0;
-				line-height:1.5em;
+				font-size: .9em;
 				width:auto;
 				float:none;
-
-				input{
-					vertical-align:middle;
-				}
+				font-weight: normal;
 
 				&:hover{
 					color:#d54e21;
+				}
+
+				input,
+				span{
+					display: block;
+				}
+
+				input{
+					float:left;
+					margin:0 5px 0 0;
+				}
+
+				span{
+					line-height: 1.2;
+					white-space: nowrap;
+					overflow: hidden;
+					-o-text-overflow: ellipsis;
+					text-overflow: ellipsis;
+				}
+
+				input:checked + span{
+					font-weight: bold;
+					color:#000;
 				}
 
 			}
@@ -211,6 +237,22 @@
 
 		}		
 
+	}
+
+}
+
+@media screen and (max-width: 782px){
+
+	#recently-edited-content{
+		.dashboard-widget-control-form{
+			li{
+				label{
+					span{
+						line-height: 25px;
+					}
+				}
+			}
+		}
 	}
 
 }
