@@ -6,7 +6,7 @@ Plugin URI: http://phplug.in/
 Tags: dashboard, widget, dashboard widget, edited, post types, recent content, recently edited, user preferences
 Requires at least: 3.0.0
 Tested up to: 3.8.1
-Stable tag: 0.2.13
+Stable tag: 0.2.14
 
 This plugin provides a dashboard widget that lists recently edited content for quick access.
 
@@ -20,7 +20,7 @@ Options (per user settings):
 * Excerpt length - number of words (0 = hide)
 * Show only your edits
 * What post types to show
-* What post status to show
+* What post statuses to show
 
 == Installation ==
 
@@ -35,8 +35,12 @@ Options (per user settings):
 
 == Changelog ==
 
+= 0.2.14 =
+* Updated which post types and statuses are checked by default. It will now show public post types by default.
+* Minor style updates for configuration panel.
+
 = 0.2.13 =
-* Bug fixes - compatibility with WordPress 3.0.
+* Compatibility fixes for WordPress 3.0.
 
 = 0.2.12 =
 * Updated styles for WordPress versions older than 3.8.
@@ -54,7 +58,7 @@ Options (per user settings):
 * Fixed PHP warning when WP_DEBUG is true.
 
 = 0.2.8 =
-* Updated html input type number to have min and max attributes.
+* Updated HTML input type number to have min and max attributes.
 
 = 0.2.7 =
 * Updated permissions check. The widget does not get added with `wp_add_dashboard_widget` unless the current user can `edit_posts` or `edit_others_posts`.
@@ -72,7 +76,7 @@ Options (per user settings):
 
 = 0.2.3 =
 * Rewrote configuration options - new options, saved per user.
-* Updated CSS - added post status bg images.
+* Updated CSS - added post status background images.
 
 = 0.1 =
 * Initial build of plugin. Nothing fancy.
