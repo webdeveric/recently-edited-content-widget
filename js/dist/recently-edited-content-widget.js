@@ -11,7 +11,6 @@
 			delay: 200,
 			minLength: 3,
 			source: function( request, response ) {
-				// output.empty();
 				var term = request.term;
 				request.action = 'recw_autocomplete';
 				request.recw_action = $('#recw_action').val();
@@ -32,6 +31,7 @@
 						cache[ term ] = server_responce.data.terms;
 						response( server_responce.data.terms );
 						if( server_responce.data.errors ){
+							output.empty();
 							$.each( server_responce.data.errors, function( index, value ){
 								output.append('<p>' + value + '</p>');
 							} );
