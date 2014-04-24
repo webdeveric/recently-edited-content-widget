@@ -1,4 +1,5 @@
 @import "compass/css3";
+@import "compass/css3/border-radius";
 @import "compass/utilities/general/clearfix";
 @import "variables";
 
@@ -236,6 +237,67 @@
 			}
 
 		}		
+
+	}
+
+}
+
+#recw-search{
+
+	background:#FBFBFB;
+	padding:1em;
+
+	.ui-autocomplete-loading {
+		background-image:url('../../imgs/ajax-loader.gif');
+		background-position: 98% center;
+		background-repeat: no-repeat;
+	}
+
+	#recw-search-input,
+	#recw-search-button{
+		display: inline-block;
+		vertical-align: top;	
+	}
+
+	#recw-search-input{
+		width:82%;
+		margin-right:1%;
+	}
+
+	#recw-search-button{
+		width:17%;
+	}
+
+	#recw-search-output{
+		margin:1em 0 0 0;
+
+		&.loading{
+			background-image:url('../../imgs/ajax-loader.gif');
+			background-position: 98% center;
+			background-repeat: no-repeat;
+		}
+
+		&:empty{
+			display: none;
+		}
+
+		li{
+    		margin:0 0 1em 0;
+    		padding:0;
+		}
+
+		li + li{
+			margin-top:.5em;
+		}
+
+		p{
+			margin:0;
+			padding:0;
+		}
+
+		a{
+			font-weight: bold;
+		}
 
 	}
 
