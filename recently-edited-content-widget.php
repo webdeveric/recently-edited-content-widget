@@ -566,18 +566,14 @@ ITEM;
 
     public static function ajaxSearch()
     {
-
         self::initFields();
         self::loadOptions();
-
         self::addFilters();
 
         $data = array(
             'items'  => array(),
             'errors' => array(),
         );
-
-        $data['USER_META_KEY'] = get_user_meta( get_current_user_id(), self::USER_META_KEY, true);
 
         if ( ! (filter_has_var(INPUT_POST, 'recw_action') && wp_verify_nonce( $_POST['recw_action'], 'search'))) {
             $data['errors'][] = 'Empty or invalid nonce value.';
@@ -596,9 +592,9 @@ ITEM;
 
             while ($search->have_posts()) {
                 $search->the_post();
-                $item = new stdClass;
-                $item->title = get_the_title();
-                $item->excerpt = wpautop(get_the_excerpt());
+                $item            = new stdClass;
+                $item->title     = get_the_title();
+                $item->excerpt   = wpautop(get_the_excerpt());
                 $item->edit_link = get_edit_post_link(get_the_ID());
                 $data['items'][] = $item;
             }
@@ -622,7 +618,6 @@ ITEM;
 
     public static function ajaxAutoComplete()
     {
-
         self::initFields();
         self::loadOptions();
 

@@ -3,6 +3,7 @@
 
 	$( function(){
 
+		var form   = $('#recw-search');
 		var output = $('#recw-search-output');
 		var search = $('#recw-search-input');
 		var cache = {};
@@ -93,7 +94,7 @@
 
 		}
 
-		$('#recw-search').submit( function(){
+		form.submit( function(){
 			// abort current lookup
 			// clear results div
 			// show progress indicator
@@ -101,6 +102,9 @@
 			recw_search( this.elements['search-term'].value );
 			return false;
 		} );
+
+		if (search.val() !== '')
+			form.submit();
 
 	} );
 	
