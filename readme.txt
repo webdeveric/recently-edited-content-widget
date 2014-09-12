@@ -5,7 +5,7 @@ Author URI: http://webdeveric.com/
 Plugin URI: http://phplug.in/
 Tags: dashboard, widget, dashboard widget, edited, post types, recent content, recently edited, user preferences
 Requires at least: 3.0.0
-Tested up to: 3.9.1
+Tested up to: 4.0.0
 Stable tag: 0.3
 
 This plugin provides a dashboard widget that lists recently edited content for quick access.
