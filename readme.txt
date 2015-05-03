@@ -35,6 +35,10 @@ Options (per user settings):
 
 == Changelog ==
 
+= 0.3.1 =
+* Verified compatibility with WordPress 4.2.
+* Grunt workflow updates.
+
 = 0.3 =
 * Added a search box with autocomplete and ajax search results.
 
