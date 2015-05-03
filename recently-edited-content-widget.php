@@ -6,12 +6,12 @@ Plugin Group: Dashboard Widgets
 Author: Eric King
 Author URI: http://webdeveric.com/
 Description: This plugin provides a dashboard widget that shows content you have modified recently.
-Version: 0.3
+Version: 0.3.1
 */
 
 class RecentlyEditedContentWidget {
 
-    const VERSION       = '0.3';
+    const VERSION       = '0.3.1';
     const WIDGET_ID     = 'recently-edited-content';
     const WIDGET_TITLE  = 'Recent Content';
     const USER_META_KEY = 'recw_options';
