@@ -41,7 +41,7 @@ class RecentlyEditedContentWidget {
 
     public static function removeFilters()
     {
-        remove_filter('excerpt_more', array(__CLASS__, 'blankExcerpt'), PHP_INT_MAX, 1);    
+        remove_filter('excerpt_more', array(__CLASS__, 'blankExcerpt'), PHP_INT_MAX, 1);
     }
 
     public static function loadOptions($save_options = false)
@@ -130,7 +130,7 @@ class RecentlyEditedContentWidget {
             $dashicons_class = version_compare(get_bloginfo('version'), '3.8', '>=') ? 'has-dashicons' : 'no-dashicons';
 
             while ($recent_content->have_posts()):
-                
+
                 $recent_content->the_post();
 
                 $permalink    = get_permalink();
@@ -218,7 +218,7 @@ ITEM;
             wp_reset_query();
 
             remove_filter('excerpt_length', array(__CLASS__, 'excerpt_length'), PHP_INT_MAX);
-            remove_filter('excerpt_more',   array(__CLASS__, 'excerpt_more'),   PHP_INT_MAX);    
+            remove_filter('excerpt_more',   array(__CLASS__, 'excerpt_more'),   PHP_INT_MAX);
 
             self::searchForm();
 
@@ -544,8 +544,8 @@ ITEM;
             array(__CLASS__, 'config')
         );
 
-        wp_enqueue_style('recw', plugins_url('/css/dist/recently-edited-content-widget.min.css', __FILE__), array(), self::VERSION);
-        wp_enqueue_script('recw', plugins_url( '/js/dist/recently-edited-content-widget.min.js', __FILE__ ), array('jquery', 'jquery-ui-autocomplete'), self::VERSION );
+        wp_enqueue_style('recw', plugins_url('/css/main.css', __FILE__ ), array(), self::VERSION );
+        wp_enqueue_script('recw', plugins_url( '/js/dist/main.js', __FILE__ ), array('jquery', 'jquery-ui-autocomplete'), self::VERSION );
     }
 
     public static function adminHead()
