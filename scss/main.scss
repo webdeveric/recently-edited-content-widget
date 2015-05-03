@@ -115,31 +115,31 @@
             }
 
             &.odd{
-                background-color:#FAFAFA;   
+                background-color:#FAFAFA;
             }
 
             &.pending{
-                background-image:url(../../imgs/45-deg-gold.png);
+                background-image:url(../imgs/45-deg-gold.png);
                 border-left:4px solid #DD823B;
             }
 
             &.draft{
-                background-image:url(../../imgs/wavy-lines-green.png);
+                background-image:url(../imgs/wavy-lines-green.png);
                 border-left:4px solid #9EA476;
             }
 
             &.trash{
-                background-image:url(../../imgs/red-x.png);
+                background-image:url(../imgs/red-x.png);
                 border-left:4px solid #E14D43;
             }
 
             &.future{
-                background-image:url(../../imgs/chronometer.png), url(../../imgs/45-deg-white.png);
+                background-image:url(../imgs/chronometer.png), url(../imgs/45-deg-white.png);
                 background-repeat:no-repeat, repeat;
                 background-position:98% 10px, 0 0;
                 border-left:4px solid #52ACCC;
             }
-            
+
             &.pending,
             &.draft,
             &.trash,
@@ -148,7 +148,7 @@
             }
 
             &:hover{
-                background-color:#FFF;  
+                background-color:#FFF;
 
                 .row-actions{
                     visibility:visible;
@@ -181,14 +181,14 @@
                 }
 
                 &.no-dashicons.empty{
-                    background-image:url(../../imgs/icon-image.png);
+                    background-image:url(../imgs/icon-image.png);
                     background-position: center center;
                     background-repeat: no-repeat;
                     background-size:auto;
                 }
 
                 &.empty:hover{
-                    
+
                 }
 
             }
@@ -234,7 +234,7 @@
 
             }
 
-        }       
+        }
 
     }
 
@@ -246,7 +246,7 @@
     padding:1em;
 
     .ui-autocomplete-loading {
-        background-image:url('../../imgs/ajax-loader.gif');
+        background-image: url(../imgs/ajax-loader.gif);
         background-position: 98% center;
         background-repeat: no-repeat;
     }
@@ -254,7 +254,7 @@
     #recw-search-input,
     #recw-search-button{
         display: inline-block;
-        vertical-align: top;    
+        vertical-align: top;
     }
 
     #recw-search-input{
@@ -270,7 +270,7 @@
         margin:1em 0 0 0;
 
         &.loading{
-            background-image:url('../../imgs/ajax-loader.gif');
+            background-image:url(../imgs/ajax-loader.gif);
             background-position: 98% center;
             background-repeat: no-repeat;
         }
