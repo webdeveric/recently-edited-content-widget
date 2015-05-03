@@ -242,7 +242,7 @@ module.exports = function( grunt ) {
 
     grunt.registerTask(
         "default",
-        [ "assets", "watch" ]
+        [ "checkwpversion", "assets", "watch" ]
     );
 
     grunt.registerTask(
