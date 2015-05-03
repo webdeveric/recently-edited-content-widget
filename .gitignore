@@ -1,2 +1,3 @@
-.sass-cache
-node_modules
+/.reports
+/.sass-cache
+/node_modules
