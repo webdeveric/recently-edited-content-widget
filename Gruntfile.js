@@ -175,7 +175,7 @@ module.exports = function( grunt ) {
             // https://github.com/gruntjs/grunt-contrib-watch
             watch: {
                 sass: {
-                    files: [ "sass/**/*.{scss,sass}" ],
+                    files: [ "scss/**/*.{scss,sass}" ],
                     tasks: [ "style" ]
                 },
 
