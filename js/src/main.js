@@ -95,10 +95,6 @@
         }
 
         form.submit( function() {
-            // abort current lookup
-            // clear results div
-            // show progress indicator
-            // upon success, clear indicator and then populate results div
             recw_search( this.elements["search-term"].value );
             return false;
         } );
