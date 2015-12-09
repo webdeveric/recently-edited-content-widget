@@ -35,6 +35,9 @@ Options (per user settings):
 
 == Changelog ==
 
+= 0.3.2 =
+* Verified compatibility with WordPress 4.4.
+
 = 0.3.1 =
 * Verified compatibility with WordPress 4.2.
 * Grunt workflow updates.
