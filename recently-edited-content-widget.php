@@ -108,6 +108,17 @@ class RecentlyEditedContentWidget
             $args['meta_value'] = get_current_user_id();
         }
 
+        if (self::$options['since_date']) {
+            $args['date_query'] = array(
+              array(
+                'after' => self::$options['since_date'],
+                'column' => 'post_modified_gmt'
+              )
+            );
+            // Remove page limit when since_date is set
+            $args['posts_per_page'] = -1;
+        }
+
         return new WP_Query($args);
     }
 
@@ -222,6 +233,10 @@ ITEM;
 
             self::searchForm();
 
+            if (self::$options['since_date']){
+              echo sprintf('<div class="dashboard-recw-item">Showing items changed since <b>%s</b></div>', self::$options['since_date']);
+            }
+
             echo implode('', $list);
 
         } else {
@@ -237,6 +252,10 @@ ITEM;
                 if ($num_posts > 0 && $num_edits == 0)
                     $message .= '<p>It looks like you have a new site or have just imported your data. Started editing your content to have it show up here.</p>';
 
+            }
+
+            if (self::$options['since_date']) {
+                $message = '<p>No changes found since '.self::$options['since_date'].'</p>';
             }
 
             printf('<div class="dashboard-recw-notice">%s</div>', __($message));
@@ -364,6 +383,13 @@ ITEM;
                         }
 
                     break;
+                    case 'date_string':
+                        if (isset($data[ $option_name ]) && strtotime($data[ $option_name ])) {
+                            self::$options[ $option_name ] = $data[ $option_name ];
+                        } else {
+                            self::$options[ $option_name ] = $opt['value'];
+                        }
+                    break;
                     case 'bool':
                         if (isset($opt['values'])) {
                             self::$options[ $option_name ] = array();
@@ -388,7 +414,13 @@ ITEM;
             echo '<p>';
             echo '<label for="' . self::WIDGET_ID . '-' . $option_name . '">' . __($opt['label']) . '</label>';
 
-            $input = '<input id="' . self::WIDGET_ID . '-' . $option_name . '" name="'.$form_id.'[' . $option_name . ']" type="' . $opt['input'] . '" value="%s" %s />';
+            if(isset($opt['placeholder'])){
+              $placeholder_attr = 'placeholder="'.$opt['placeholder'].'"';
+            }else{
+              $placeholder_attr = '';
+            }
+
+            $input = '<input id="' . self::WIDGET_ID . '-' . $option_name . '" '.$placeholder_attr.' name="'.$form_id.'[' . $option_name . ']" type="' . $opt['input'] . '" value="%s" %s />';
             switch($opt['input']) {
                 case 'checkbox':
                     if (isset($opt['values'])) {
@@ -496,6 +528,13 @@ ITEM;
                 'value'    => 5,
                 'minvalue' => 1,
                 'maxvalue' => 100
+            ),
+            'since_date' => array(
+                'type'     => 'date_string',
+                'input'    => 'text',
+                'label'    => 'Show only items changed since:',
+                'placeholder' => "eg. 'July 1' or 'last month'",
+                'value'    => ''
             ),
             'excerpt_length' => array(
                 'type'     => 'int',
