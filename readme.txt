@@ -17,6 +17,7 @@ This plugin provides a dashboard widget that lists recently edited content for q
 Options (per user settings):
 
 * Number of items to show
+* Show only items changed since a particular date
 * Excerpt length - number of words (0 = hide)
 * Show only your edits
 * What post types to show
