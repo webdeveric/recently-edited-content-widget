@@ -234,11 +234,7 @@ ITEM;
             self::searchForm();
 
             if (self::$options['since_date']){
-              if(strtotime(self::$options['since_date'])){
-                echo '<div class="dashboard-recw-item">Showing items changed since <b>'.self::$options['since_date'].'</b></div>';
-              }else{
-                echo '<div class="dashboard-recw-item">Couldn&#8217;t parse the date "<b>'.self::$options['since_date'].'</b>".</div>';
-              }
+              echo sprintf('<div class="dashboard-recw-item">Showing items changed since <b>%s</b></div>', self::$options['since_date']);
             }
 
             echo implode('', $list);
@@ -387,6 +383,13 @@ ITEM;
                         }
 
                     break;
+                    case 'date_string':
+                        if (isset($data[ $option_name ]) && strtotime($data[ $option_name ])) {
+                            self::$options[ $option_name ] = $data[ $option_name ];
+                        } else {
+                            self::$options[ $option_name ] = $opt['value'];
+                        }
+                    break;
                     case 'bool':
                         if (isset($opt['values'])) {
                             self::$options[ $option_name ] = array();
@@ -397,15 +400,6 @@ ITEM;
                             }
                         } else {
                             self::$options[ $option_name ] = (isset($data[ $option_name ]) && ($data[ $option_name ] == true || $data[ $option_name ] == 'true'));
-                        }
-                    break;
-                    // Added
-                    case 'str':
-                        if (isset($data[ $option_name ])) {
-                          if(strlen($data[ $option_name ]) > $opt['maxvalue']){
-                            $data[ $option_name ] = substr($data[ $option_name ],$opt['maxvalue']);
-                          }
-                          self::$options[ $option_name ] = $data[ $option_name ];
                         }
                     break;
                     default:
@@ -420,7 +414,6 @@ ITEM;
             echo '<p>';
             echo '<label for="' . self::WIDGET_ID . '-' . $option_name . '">' . __($opt['label']) . '</label>';
 
-            // Added
             if(isset($opt['placeholder'])){
               $placeholder_attr = 'placeholder="'.$opt['placeholder'].'"';
             }else{
@@ -537,13 +530,11 @@ ITEM;
                 'maxvalue' => 100
             ),
             'since_date' => array(
-                'type'     => 'string',
+                'type'     => 'date_string',
                 'input'    => 'text',
                 'label'    => 'Show only items changed since:',
                 'placeholder' => "eg. 'July 1' or 'last month'",
-                'value'    => '',
-                'minvalue' => 0,
-                'maxvalue' => 100
+                'value'    => ''
             ),
             'excerpt_length' => array(
                 'type'     => 'int',
